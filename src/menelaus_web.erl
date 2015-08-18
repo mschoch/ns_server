@@ -335,6 +335,8 @@ loop_inner(Req, AppRoot, Path, PathTokens) ->
                              {auth_ro, fun handle_node/2, [NodeId]};
                          ["nodes", "self", "xdcrSSLPorts"] ->
                              {done, handle_node_self_xdcr_ssl_ports(Req)};
+                         ["nodes", "self", "cbftPort"] ->
+                             {done, handle_node_self_cbft_port(Req)};
                          ["indexStatus"] ->
                              {auth_ro, fun menelaus_web_indexes:handle_index_status/1};
                          ["settings", "indexes"] ->
@@ -2435,6 +2437,10 @@ handle_node_self_xdcr_ssl_ports(Req) ->
                                       {httpsMgmt, RESTSSL},
                                       {httpsCAPI, CapiSSL}]})
     end.
+
+handle_node_self_cbft_port(Req) ->
+    Port = ns_config:read_key_fast({node, node(), cbft_http_port}, 9200),
+    reply_json(Req, {struct, [{cbftPort, Port}]}).
 
 handle_cluster_certificate(Req) ->
     assert_is_enterprise(),
