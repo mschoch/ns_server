@@ -17,12 +17,15 @@
 var CbftSection = {
   init: function () {
   ifrm = document.createElement("IFRAME"); 
-     ifrm.setAttribute("src", "http://localhost:9200"); 
+     ifrm.setAttribute("src", "http://localhost:9200");
+     ifrm.setAttribute("id", "cbft_iframe");
      ifrm.style.width = 950+"px"; 
      ifrm.style.height = 800+"px";
      document.getElementById("js_cbft").appendChild(ifrm); 
   },
   onEnter: function () {
+    var iframe = document.getElementById('cbft_iframe');
+    iframe.src = iframe.src;
   },
   navClick: function () {
   }
